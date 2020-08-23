@@ -5,7 +5,9 @@ var port = require('../configuration').port;
 var connectDb = require('../helpers/db').connectDb;
 
 const startServer = () => {
-    app.listen(port);
+    app.listen(port, () => {
+        console.log('Our api server work correctly')
+    });
 
     const kittySchema = new mongoose.Schema({
         name: String
