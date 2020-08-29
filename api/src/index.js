@@ -2,6 +2,8 @@ var express = require('express');
 var app = express();
 var mongoose = require('mongoose');
 var port = require('../configuration').port;
+var authApiUrl = require('../configuration').authApiUrl;
+var axios = require('axios');
 var connectDb = require('../helpers/db').connectDb;
 
 const startServer = () => {
@@ -31,4 +33,14 @@ connectDb()
 
 app.get('/hello', (req, res) => {
     res.json({status: 'API Microservice is working'});
+});
+
+app.get('/test-with-current-user', (req, res) => {
+    axios.get(authApiUrl + '/current-user').then((response) => {
+        console.log(response.data);
+        res.json({
+            user: response.data,
+            isUserAuthenticated: true,
+        });
+    });
 });
